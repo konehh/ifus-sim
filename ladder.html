@@ -40,8 +40,12 @@ h1 .grad{background:linear-gradient(120deg,var(--blue),var(--purple) 60%,var(--g
 .sort{display:flex;gap:4px;background:var(--card);border-radius:12px;padding:4px;box-shadow:var(--shadow)}
 .sort button{background:none;border:none;color:var(--ink2);font-family:inherit;font-size:13px;font-weight:500;padding:7px 15px;border-radius:9px;cursor:pointer;transition:all .15s}
 .sort button.on{background:var(--blue);color:#fff}
-.card{background:var(--card);border-radius:var(--radius);padding:24px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:all .18s}
+.card{background:var(--card);border-radius:var(--radius);padding:24px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:all .18s;border-left:5px solid var(--line2)}
 .card:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px)}
+.card.edge-warmup{border-left-color:var(--green)}
+.card.edge-core{border-left-color:var(--blue)}
+.card.edge-hard{border-left-color:var(--amber)}
+.card.edge-brutal{border-left-color:var(--coral)}
 .pills{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
 .pill{font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;letter-spacing:.1px}
 .pill.arch{font-weight:500}
@@ -120,6 +124,7 @@ h1 .grad{background:linear-gradient(120deg,var(--blue),var(--purple) 60%,var(--g
 <script>
 var PER_PAGE=10, page=1, sort='latest';
 var tierClass={'Warm-up':'t-warmup','Core':'t-core','Hard':'t-hard','Brutal':'t-brutal'};
+var edgeClass={'Warm-up':'edge-warmup','Core':'edge-core','Hard':'edge-hard','Brutal':'edge-brutal'};
 var tierRank={'Warm-up':0,'Core':1,'Hard':2,'Brutal':3};
 function ordered(){
   var a=PROJECTS.slice();
@@ -141,7 +146,7 @@ function render(){
     var builds=p.builds.map(function(b){return '<li>'+esc(b)+'</li>';}).join('');
     var accept=p.accept.map(function(b){return '<li>'+esc(b)+'</li>';}).join('');
     var qs=p.questions.map(function(b){return '<li>'+esc(b)+'</li>';}).join('');
-    html+='<div class="card">'+
+    html+='<div class="card '+edgeClass[p.tier]+'">'+
       '<div class="pills">'+
         '<span class="pill '+tierClass[p.tier]+'">'+esc(p.tier)+'</span>'+
         '<span class="pill arch a-'+p.archetypeKey+'">'+esc(p.archetype)+'</span>'+
