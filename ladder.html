@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sim — Project Ladder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#11100c; --surface:#1a1813; --surface2:#221f18; --line:#322e24;
+  --ink:#f3efe6; --ink2:#b8b09c; --ink3:#807965; --accent:#c9a14a;
+  --warmup:#6f9c6a; --core:#5b8bbf; --hard:#c98a3e; --brutal:#c5604e;
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased;padding:0 20px 80px}
+.wrap{max-width:860px;margin:0 auto}
+header.top{padding:46px 0 30px;border-bottom:1px solid var(--line);margin-bottom:34px}
+.brand{display:inline-flex;align-items:center;gap:8px;font-family:Fraunces,serif;font-weight:600;
+  font-size:15px;color:var(--accent);letter-spacing:.3px}
+.brand .dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+nav{float:right;display:flex;gap:22px;font-size:14px;margin-top:2px}
+nav a{color:var(--ink3);text-decoration:none;transition:color .15s}
+nav a:hover{color:var(--ink)}
+h1{font-family:Fraunces,serif;font-weight:600;font-size:34px;line-height:1.15;margin:26px 0 8px;letter-spacing:-.5px}
+.sub{color:var(--ink2);font-size:16px;max-width:560px}
+.controls{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin:30px 0 18px}
+.count{color:var(--ink3);font-size:13px;letter-spacing:.4px;text-transform:uppercase}
+.sort{display:flex;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px}
+.sort button{background:none;border:none;color:var(--ink2);font-family:inherit;font-size:13px;
+  padding:6px 13px;border-radius:7px;cursor:pointer;transition:all .15s}
+.sort button.on{background:var(--surface2);color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px 24px;margin-bottom:14px;transition:border-color .15s}
+.card:hover{border-color:#403a2d}
+.pills{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:13px}
+.pill{font-size:12px;font-weight:500;padding:3px 11px;border-radius:20px;letter-spacing:.2px}
+.pill.tier{color:#0d0c09}
+.pill.arch{background:var(--surface2);color:var(--ink2);border:1px solid var(--line)}
+.pill.sector{background:transparent;color:var(--ink3);border:1px solid var(--line)}
+.t-warmup{background:var(--warmup)} .t-core{background:var(--core)}
+.t-hard{background:var(--hard)} .t-brutal{background:var(--brutal)}
+.card h2{font-family:Fraunces,serif;font-weight:600;font-size:21px;line-height:1.25;margin-bottom:7px;letter-spacing:-.2px}
+.card .sm{color:var(--ink2);font-size:15px;margin-bottom:15px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.badge{font-size:12px;color:var(--ink2);background:var(--surface2);border:1px solid var(--line);
+  padding:2px 9px;border-radius:6px}
+.viewbrief{margin-top:16px;background:none;border:1px solid var(--line);color:var(--ink);
+  font-family:inherit;font-size:14px;padding:8px 16px;border-radius:9px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:7px;transition:all .15s}
+.viewbrief:hover{border-color:var(--accent);color:var(--accent)}
+.viewbrief .chev{transition:transform .2s}
+.viewbrief.open .chev{transform:rotate(180deg)}
+.brief{max-height:0;overflow:hidden;transition:max-height .35s ease;border-top:0px solid var(--line);margin-top:0}
+.brief.open{max-height:2600px;border-top:1px solid var(--line);margin-top:18px;padding-top:18px}
+.brief h3{font-size:12px;text-transform:uppercase;letter-spacing:.7px;color:var(--accent);
+  margin:18px 0 9px;font-weight:600}
+.brief h3:first-child{margin-top:0}
+.brief p{color:var(--ink2);font-size:14.5px;margin-bottom:6px}
+.brief ul{list-style:none;margin:0}
+.brief li{color:var(--ink2);font-size:14.5px;padding-left:18px;position:relative;margin-bottom:6px}
+.brief li:before{content:"";position:absolute;left:2px;top:10px;width:5px;height:5px;
+  border-radius:50%;background:var(--accent);opacity:.6}
+.scope{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0}
+.scope div{flex:1;min-width:220px;background:var(--surface2);border:1px solid var(--line);
+  border-radius:10px;padding:13px 15px}
+.scope .lab{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--accent);margin-bottom:5px;font-weight:600}
+.scope .val{font-size:14px;color:var(--ink2)}
+.stretch{background:var(--surface2);border-left:2px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:11px 15px;font-size:14px;color:var(--ink2);font-style:italic;margin-top:10px}
+.pager{display:flex;justify-content:center;align-items:center;gap:7px;margin-top:34px;flex-wrap:wrap}
+.pager button{background:var(--surface);border:1px solid var(--line);color:var(--ink2);
+  font-family:inherit;font-size:14px;min-width:40px;height:40px;border-radius:9px;cursor:pointer;transition:all .15s}
+.pager button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.pager button.on{background:var(--accent);color:#0d0c09;border-color:var(--accent);font-weight:600}
+.pager button:disabled{opacity:.35;cursor:default}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:30px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--ink3)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+@media(max-width:560px){nav{float:none;margin-top:14px}h1{font-size:27px}.card{padding:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="brand"><span class="dot"></span>Sim</span>
+    <nav><a href="index.html">Home</a><a href="ladder.html">Ladder</a><a href="portfolio.html">Portfolio</a></nav>
+    <h1>The project ladder</h1>
+    <p class="sub">Real company-style briefs built from your stack — from warm-up to brutal. Each one is done only when there's a repo, a demo, and a write-up.</p>
+  </header>
+
+  <div class="controls">
+    <span class="count" id="count"></span>
+    <div class="sort">
+      <button id="s-latest" class="on" onclick="setSort('latest')">Latest</button>
+      <button id="s-diff" onclick="setSort('difficulty')">Difficulty</button>
+    </div>
+  </div>
+
+  <div id="list"></div>
+  <div class="pager" id="pager"></div>
+
+  <div class="legend">
+    <span><i style="background:var(--warmup)"></i> Warm-up</span>
+    <span><i style="background:var(--core)"></i> Core</span>
+    <span><i style="background:var(--hard)"></i> Hard</span>
+    <span><i style="background:var(--brutal)"></i> Brutal</span>
+  </div>
+</div>
+
+<script src="projects.js"></script>
+<script>
+var PER_PAGE=10, page=1, sort='latest';
+var tierClass={'Warm-up':'t-warmup','Core':'t-core','Hard':'t-hard','Brutal':'t-brutal'};
+var tierRank={'Warm-up':0,'Core':1,'Hard':2,'Brutal':3};
+
+function ordered(){
+  var a=PROJECTS.slice();
+  if(sort==='latest'){a.sort(function(x,y){return y.n-x.n});}
+  else{a.sort(function(x,y){return tierRank[x.tier]-tierRank[y.tier] || x.n-y.n});}
+  return a;
+}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function render(){
+  var all=ordered();
+  var pages=Math.ceil(all.length/PER_PAGE);
+  if(page>pages)page=pages;
+  var start=(page-1)*PER_PAGE;
+  var slice=all.slice(start,start+PER_PAGE);
+  document.getElementById('count').textContent=all.length+' projects · page '+page+' of '+pages;
+
+  var html='';
+  slice.forEach(function(p){
+    var badges=p.stack.map(function(s){return '<span class="badge">'+esc(s)+'</span>';}).join('');
+    var builds=p.builds.map(function(b){return '<li>'+esc(b)+'</li>';}).join('');
+    var accept=p.accept.map(function(b){return '<li>'+esc(b)+'</li>';}).join('');
+    var qs=p.questions.map(function(b){return '<li>'+esc(b)+'</li>';}).join('');
+    html+=''+
+    '<div class="card">'+
+      '<div class="pills">'+
+        '<span class="pill tier '+tierClass[p.tier]+'">'+esc(p.tier)+'</span>'+
+        '<span class="pill arch">'+esc(p.archetype)+'</span>'+
+        '<span class="pill sector">'+esc(p.sector)+'</span>'+
+      '</div>'+
+      '<h2>'+esc(p.title)+'</h2>'+
+      '<p class="sm">'+esc(p.summary)+'</p>'+
+      '<div class="badges">'+badges+'</div>'+
+      '<button class="viewbrief" onclick="toggle(this)">View brief <span class="chev">&#9662;</span></button>'+
+      '<div class="brief">'+
+        '<h3>The brief</h3><p>'+esc(p.brief)+'</p>'+
+        '<h3>What he builds</h3><ul>'+builds+'</ul>'+
+        '<div class="scope">'+
+          '<div><div class="lab">Effort</div><div class="val">'+esc(p.effort)+'</div></div>'+
+          '<div><div class="lab">Cost &amp; resources</div><div class="val">'+esc(p.cost)+'</div></div>'+
+        '</div>'+
+        '<h3>Acceptance checklist</h3><ul>'+accept+'</ul>'+
+        '<h3>Questions a delivery manager will ask</h3><ul>'+qs+'</ul>'+
+        '<div class="stretch">Stretch: '+esc(p.stretch)+'</div>'+
+      '</div>'+
+    '</div>';
+  });
+  document.getElementById('list').innerHTML=html;
+
+  var pg='';
+  pg+='<button onclick="go('+(page-1)+')"'+(page===1?' disabled':'')+'>&#8249;</button>';
+  for(var i=1;i<=pages;i++){pg+='<button class="'+(i===page?'on':'')+'" onclick="go('+i+')">'+i+'</button>';}
+  pg+='<button onclick="go('+(page+1)+')"'+(page===pages?' disabled':'')+'>&#8250;</button>';
+  document.getElementById('pager').innerHTML=pg;
+}
+function toggle(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('open');}
+function go(p){var pages=Math.ceil(PROJECTS.length/PER_PAGE);if(p<1||p>pages)return;page=p;render();window.scrollTo({top:0,behavior:'smooth'});}
+function setSort(s){sort=s;page=1;document.getElementById('s-latest').classList.toggle('on',s==='latest');document.getElementById('s-diff').classList.toggle('on',s==='difficulty');render();}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sim — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#11100c;--surface:#1a1813;--surface2:#221f18;--line:#322e24;
+  --ink:#f3efe6;--ink2:#b8b09c;--ink3:#807965;--accent:#c9a14a;--radius:14px;
+  --build:#5b8bbf;--polish:#9b7bc9;--debug:#c98a3e;--rescue:#c5604e;--ai:#5aa6a0;--architect:#b0843e;--unfixable:#bd5a7a;--capstone:#c9a14a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased;padding:0 20px 80px}
+.wrap{max-width:760px;margin:0 auto}
+header.top{padding:30px 0;display:flex;justify-content:space-between;align-items:center}
+.brand{display:inline-flex;align-items:center;gap:8px;font-family:Fraunces,serif;font-weight:600;font-size:15px;color:var(--accent)}
+.brand .dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+nav{display:flex;gap:22px;font-size:14px}
+nav a{color:var(--ink3);text-decoration:none;transition:color .15s}
+nav a:hover{color:var(--ink)}
+.head{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;margin-bottom:26px}
+.head .row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.who{display:flex;align-items:center;gap:15px}
+.avatar{width:50px;height:50px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-weight:600;color:var(--accent);font-size:16px}
+.who h1{font-family:Fraunces,serif;font-weight:600;font-size:21px;line-height:1.2}
+.who p{color:var(--ink2);font-size:14px}
+.url{display:flex;align-items:center;gap:7px;color:var(--ink3);font-size:13px}
+.url button{background:none;border:1px solid var(--line);color:var(--ink2);font-family:inherit;font-size:12px;
+  padding:5px 11px;border-radius:8px;cursor:pointer;transition:all .15s}
+.url button:hover{border-color:var(--accent);color:var(--accent)}
+.stats{display:flex;gap:30px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.stat .num{font-family:Fraunces,serif;font-size:26px;font-weight:600}
+.stat .lab{color:var(--ink3);font-size:12px;letter-spacing:.3px}
+.shipbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.shipbar h2{font-family:Fraunces,serif;font-weight:600;font-size:18px}
+.shipbtn{background:var(--accent);color:#0d0c09;border:none;font-family:inherit;font-weight:600;font-size:14px;
+  padding:9px 18px;border-radius:9px;cursor:pointer}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-bottom:14px}
+.pcard .row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pcard .main{flex:1;min-width:240px}
+.apill{display:inline-block;font-size:12px;font-weight:500;padding:3px 11px;border-radius:20px;color:#0d0c09;margin-bottom:10px}
+.pcard h3{font-family:Fraunces,serif;font-weight:600;font-size:18px;margin-bottom:6px}
+.pcard .out{color:var(--ink2);font-size:14.5px;margin-bottom:12px}
+.badges{display:flex;flex-wrap:wrap;gap:6px}
+.badge{font-size:12px;color:var(--ink2);background:var(--surface2);border:1px solid var(--line);padding:2px 9px;border-radius:6px}
+.acts{display:flex;flex-direction:column;gap:8px;min-width:96px}
+.acts a{font-size:13px;text-align:center;border:1px solid var(--line);border-radius:9px;padding:7px 12px;
+  text-decoration:none;color:var(--ink);transition:all .15s}
+.acts a:hover{border-color:var(--accent);color:var(--accent)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;padding:20px;overflow-y:auto}
+.modal.open{display:flex;align-items:flex-start;justify-content:center}
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px;max-width:520px;width:100%;margin:auto}
+.sheet h2{font-family:Fraunces,serif;font-weight:600;font-size:20px;margin-bottom:4px}
+.sheet .desc{color:var(--ink3);font-size:14px;margin-bottom:20px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;color:var(--ink2);margin-bottom:5px}
+.field label .req{color:var(--accent)}
+.field input{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:9px;
+  padding:10px 12px;color:var(--ink);font-family:inherit;font-size:14px}
+.field input:focus{outline:none;border-color:var(--accent)}
+.two{display:flex;gap:12px}.two .field{flex:1}
+.divide{border-top:1px solid var(--line);margin:18px 0}
+.sheet-acts{display:flex;align-items:center;gap:12px;margin-top:8px}
+.sheet-acts .gate{font-size:12px;color:var(--ink3)}
+.cancel{background:none;border:1px solid var(--line);color:var(--ink2);font-family:inherit;font-size:14px;padding:9px 16px;border-radius:9px;cursor:pointer}
+.addbtn{background:var(--accent);color:#0d0c09;border:none;font-family:inherit;font-weight:600;font-size:14px;padding:9px 20px;border-radius:9px;cursor:pointer}
+.addbtn:disabled{opacity:.4;cursor:default}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--accent);color:#0d0c09;
+  font-weight:500;font-size:14px;padding:11px 22px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:60}
+.toast.show{opacity:1}
+@media(max-width:560px){.two{flex-direction:column;gap:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="brand"><span class="dot"></span>Sim</span>
+    <nav><a href="index.html">Home</a><a href="ladder.html">Ladder</a><a href="portfolio.html">Portfolio</a></nav>
+  </header>
+
+  <div class="head">
+    <div class="row">
+      <div class="who">
+        <div class="avatar">DC</div>
+        <div><h1>Deepesh C. — backend architect</h1><p>C# · .NET 8 · Azure · clean architecture · 12+ yrs</p></div>
+      </div>
+      <div class="url">sim.app/deepesh-c <button onclick="copyLink()">Copy link</button></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num" id="st-ship">0</div><div class="lab">shipped</div></div>
+      <div class="stat"><div class="num" id="st-arch">0</div><div class="lab">archetypes</div></div>
+      <div class="stat"><div class="num" id="st-live">0</div><div class="lab">live demos</div></div>
+    </div>
+  </div>
+
+  <div class="shipbar">
+    <h2>Shipped projects</h2>
+    <button class="shipbtn" onclick="openModal()">+ Ship a project</button>
+  </div>
+
+  <div id="cards"></div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <h2>Ship a project</h2>
+    <p class="desc">Paste where your work lives. No upload — just the links.</p>
+    <div class="field"><label>Project title</label><input id="f-title" oninput="checkGate()"></div>
+    <div class="field"><label>One-line outcome</label><input id="f-out" placeholder="What did you achieve?"></div>
+    <div class="two">
+      <div class="field"><label>Archetype</label><input id="f-arch" placeholder="Build-type · integration"></div>
+      <div class="field"><label>Sector</label><input id="f-sector" placeholder="Logistics / Shipping"></div>
+    </div>
+    <div class="field"><label>Stack (comma separated)</label><input id="f-stack" placeholder="C#, .NET 8, Serilog"></div>
+    <div class="divide"></div>
+    <div class="field"><label>Repo link <span class="req">— required</span></label><input id="f-repo" placeholder="https://github.com/..." oninput="checkGate()"></div>
+    <div class="field"><label>Live demo link — optional</label><input id="f-live" placeholder="https://..."></div>
+    <div class="sheet-acts">
+      <button class="addbtn" id="addbtn" disabled onclick="addProject()">Add to portfolio</button>
+      <button class="cancel" onclick="closeModal()">Cancel</button>
+      <span class="gate">No repo link = can't ship.</span>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+var archColors={build:'#5b8bbf',polish:'#9b7bc9',debug:'#c98a3e',rescue:'#c5604e',ai:'#5aa6a0',architect:'#b0843e',unfixable:'#bd5a7a',capstone:'#c9a14a'};
+function archKey(label){
+  var l=(label||'').toLowerCase();
+  if(l.indexOf('polish')>-1)return 'polish';
+  if(l.indexOf('debug')>-1)return 'debug';
+  if(l.indexOf('rescue')>-1)return 'rescue';
+  if(l.indexOf('ai-agent')>-1||l.indexOf('agent')>-1)return 'ai';
+  if(l.indexOf('architect')>-1)return 'architect';
+  if(l.indexOf('unfixable')>-1)return 'unfixable';
+  if(l.indexOf('capstone')>-1)return 'capstone';
+  return 'build';
+}
+// Seed examples so the page looks alive. Real ones get added via the form.
+var shipped=[
+  {title:'Container status webhook normaliser',out:'Unified 3 carrier formats into one clean feed; new carriers add by config.',arch:'Build-type · integration',sector:'Logistics / Shipping',stack:['C#','.NET 8','Adapter pattern','CsvHelper'],repo:'https://github.com',live:'https://example.com'},
+  {title:'Public developer API that feels world-class',out:'Versioned API with consistent errors, rate limits, and docs a stranger can integrate in 10 minutes.',arch:'Snapple-type · polish',sector:'Pure tech play',stack:['C#','.NET 8','OpenAPI','ProblemDetails'],repo:'https://github.com',live:'https://example.com'},
+  {title:'Find and fix the bug a junior shipped',out:'Diagnosed a decimal-rounding fee bug cold, fixed it minimally, added regression tests.',arch:'Debug-type · inherited code',sector:'Fintech',stack:['C#','.NET 8','xUnit'],repo:'https://github.com',live:''}
+];
+
+function render(){
+  var html='';
+  shipped.forEach(function(p){
+    var c=archColors[archKey(p.arch)];
+    var badges=p.stack.map(function(s){return '<span class="badge">'+s+'</span>';}).join('');
+    var live=p.live?'<a href="'+p.live+'" target="_blank">Live &#8599;</a>':'';
+    html+='<div class="pcard"><div class="row"><div class="main">'+
+      '<span class="apill" style="background:'+c+'">'+p.arch+'</span>'+
+      '<h3>'+p.title+'</h3><p class="out">'+p.out+'</p>'+
+      '<div class="badges">'+badges+'</div></div>'+
+      '<div class="acts"><a href="'+p.repo+'" target="_blank">Repo &#8599;</a>'+live+'</div>'+
+      '</div></div>';
+  });
+  document.getElementById('cards').innerHTML=html;
+  document.getElementById('st-ship').textContent=shipped.length;
+  var archs={};shipped.forEach(function(p){archs[archKey(p.arch)]=1;});
+  document.getElementById('st-arch').textContent=Object.keys(archs).length;
+  document.getElementById('st-live').textContent=shipped.filter(function(p){return p.live;}).length;
+}
+function openModal(){document.getElementById('modal').classList.add('open');}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+function checkGate(){
+  var repo=document.getElementById('f-repo').value.trim();
+  var title=document.getElementById('f-title').value.trim();
+  document.getElementById('addbtn').disabled=!(repo&&title);
+}
+function addProject(){
+  var stackRaw=document.getElementById('f-stack').value.trim();
+  shipped.unshift({
+    title:document.getElementById('f-title').value.trim(),
+    out:document.getElementById('f-out').value.trim()||'Shipped.',
+    arch:document.getElementById('f-arch').value.trim()||'Build-type',
+    sector:document.getElementById('f-sector').value.trim(),
+    stack:stackRaw?stackRaw.split(',').map(function(s){return s.trim();}).filter(Boolean):[],
+    repo:document.getElementById('f-repo').value.trim(),
+    live:document.getElementById('f-live').value.trim()
+  });
+  ['f-title','f-out','f-arch','f-sector','f-stack','f-repo','f-live'].forEach(function(id){document.getElementById(id).value='';});
+  checkGate();closeModal();render();
+  showToast('Added to portfolio');
+}
+function copyLink(){
+  var url='https://sim.app/deepesh-c';
+  if(navigator.clipboard){navigator.clipboard.writeText(url);}
+  showToast('Link copied');
+}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},1600);}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+render();
+</script>
+</body>
+</html>
