@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sim — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfcfe; --card:#ffffff; --ink:#1a1d29; --ink2:#5b6075; --ink3:#9498ab;
+  --line:#eceefa; --line2:#e2e5f5;
+  --blue:#4f7cff; --blue-soft:#eef2ff; --blue-ink:#2950d4;
+  --purple:#9b6dff; --purple-soft:#f4eeff; --purple-ink:#6f42cc;
+  --green:#2bb673; --green-soft:#e8f7f0; --green-ink:#1a8a55;
+  --amber-soft:#fdf3e3; --amber-ink:#b5701a;
+  --coral-soft:#fdecea; --coral-ink:#c8472f;
+  --radius:18px; --shadow:0 1px 2px rgba(26,29,41,.04),0 8px 24px rgba(60,80,180,.06);
+  --shadow-lift:0 4px 12px rgba(26,29,41,.06),0 16px 40px rgba(60,80,180,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.bgmesh{position:fixed;inset:0;z-index:-1;background:
+  radial-gradient(55% 40% at 12% 0%,rgba(79,124,255,.06),transparent 70%),
+  radial-gradient(50% 40% at 88% 4%,rgba(43,182,115,.06),transparent 70%);pointer-events:none}
+.wrap{max-width:800px;margin:0 auto;padding:0 24px 90px}
+header.top{display:flex;justify-content:space-between;align-items:center;padding:26px 0}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:Sora,sans-serif;font-weight:700;font-size:18px;color:var(--ink);letter-spacing:-.3px}
+.brand .mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--purple));display:inline-block}
+nav{display:flex;gap:8px}
+nav a{color:var(--ink2);text-decoration:none;font-size:14px;font-weight:500;padding:8px 14px;border-radius:10px;transition:all .15s}
+nav a:hover,nav a.on{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.head{background:var(--card);border-radius:22px;padding:28px 30px;margin:18px 0 28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.head:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--purple),var(--green))}
+.head .row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.who{display:flex;align-items:center;gap:16px}
+.avatar{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff;font-size:18px;font-family:Sora,sans-serif}
+.who h1{font-family:Sora,sans-serif;font-weight:600;font-size:22px;line-height:1.2;letter-spacing:-.4px}
+.who p{color:var(--ink2);font-size:14px}
+.url{display:flex;align-items:center;gap:9px;color:var(--ink3);font-size:13px}
+.url button{background:var(--bg);border:1px solid var(--line2);color:var(--ink2);font-family:inherit;font-size:12px;font-weight:500;padding:6px 12px;border-radius:9px;cursor:pointer;transition:all .15s}
+.url button:hover{border-color:var(--blue);color:var(--blue-ink)}
+.stats{display:flex;gap:14px;margin-top:22px}
+.stat{flex:1;border-radius:14px;padding:16px 18px}
+.stat:nth-child(1){background:var(--blue-soft)}.stat:nth-child(2){background:var(--purple-soft)}.stat:nth-child(3){background:var(--green-soft)}
+.stat .num{font-family:Sora,sans-serif;font-size:28px;font-weight:700;line-height:1}
+.stat:nth-child(1) .num{color:var(--blue-ink)}.stat:nth-child(2) .num{color:var(--purple-ink)}.stat:nth-child(3) .num{color:var(--green-ink)}
+.stat .lab{color:var(--ink2);font-size:12px;margin-top:5px;font-weight:500}
+.shipbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.shipbar h2{font-family:Sora,sans-serif;font-weight:600;font-size:19px;letter-spacing:-.3px}
+.shipbtn{background:var(--green);color:#fff;border:none;font-family:inherit;font-weight:600;font-size:14px;padding:10px 20px;border-radius:11px;cursor:pointer;box-shadow:0 4px 14px rgba(43,182,115,.3);transition:all .15s;text-decoration:none;display:inline-flex;align-items:center}
+.shipbtn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(43,182,115,.4)}
+.pcard{background:var(--card);border-radius:var(--radius);padding:24px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:all .18s}
+.pcard:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px)}
+.pcard .row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.pcard .main{flex:1;min-width:250px}
+.apill{display:inline-block;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:11px}
+.a-build{background:var(--blue-soft);color:var(--blue-ink)}
+.a-polish{background:var(--purple-soft);color:var(--purple-ink)}
+.a-debug{background:var(--amber-soft);color:var(--amber-ink)}
+.a-rescue{background:var(--coral-soft);color:var(--coral-ink)}
+.a-ai{background:var(--green-soft);color:var(--green-ink)}
+.a-architect{background:var(--purple-soft);color:var(--purple-ink)}
+.a-unfixable{background:var(--coral-soft);color:var(--coral-ink)}
+.a-capstone{background:linear-gradient(120deg,var(--blue-soft),var(--purple-soft));color:var(--purple-ink)}
+.pcard h3{font-family:Sora,sans-serif;font-weight:600;font-size:19px;margin-bottom:7px;letter-spacing:-.3px}
+.pcard .out{color:var(--ink2);font-size:14.5px;margin-bottom:13px;line-height:1.55}
+.badges{display:flex;flex-wrap:wrap;gap:7px}
+.badge{font-size:12px;color:var(--ink2);background:var(--bg);border:1px solid var(--line2);padding:3px 10px;border-radius:7px}
+.acts{display:flex;flex-direction:column;gap:8px;min-width:100px}
+.acts a{font-size:13px;font-weight:500;text-align:center;border-radius:10px;padding:8px 14px;text-decoration:none;transition:all .15s}
+.acts a.repo{background:var(--ink);color:#fff}
+.acts a.repo:hover{opacity:.85}
+.acts a.live{background:var(--bg);border:1px solid var(--line2);color:var(--ink)}
+.acts a.live:hover{border-color:var(--green);color:var(--green-ink)}
+.modal{display:none;position:fixed;inset:0;background:rgba(26,29,41,.4);backdrop-filter:blur(4px);z-index:50;padding:20px;overflow-y:auto}
+.modal.open{display:flex;align-items:flex-start;justify-content:center}
+.sheet{background:var(--card);border-radius:22px;padding:30px;max-width:520px;width:100%;margin:auto;box-shadow:var(--shadow-lift)}
+.sheet h2{font-family:Sora,sans-serif;font-weight:600;font-size:21px;margin-bottom:4px;letter-spacing:-.3px}
+.sheet .desc{color:var(--ink3);font-size:14px;margin-bottom:22px}
+.field{margin-bottom:15px}
+.field label{display:block;font-size:13px;color:var(--ink2);margin-bottom:6px;font-weight:500}
+.field label .req{color:var(--green-ink)}
+.field input{width:100%;background:var(--bg);border:1px solid var(--line2);border-radius:11px;padding:11px 14px;color:var(--ink);font-family:inherit;font-size:14px;transition:border-color .15s}
+.field input:focus{outline:none;border-color:var(--blue)}
+.two{display:flex;gap:12px}.two .field{flex:1}
+.divide{border-top:1px solid var(--line);margin:20px 0}
+.sheet-acts{display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap}
+.gate{font-size:12px;color:var(--ink3)}
+.cancel{background:var(--bg);border:1px solid var(--line2);color:var(--ink2);font-family:inherit;font-size:14px;font-weight:500;padding:10px 18px;border-radius:11px;cursor:pointer}
+.addbtn{background:var(--green);color:#fff;border:none;font-family:inherit;font-weight:600;font-size:14px;padding:10px 22px;border-radius:11px;cursor:pointer;transition:all .15s}
+.addbtn:disabled{opacity:.4;cursor:default}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-weight:500;font-size:14px;padding:12px 24px;border-radius:12px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:60;box-shadow:var(--shadow-lift)}
+.toast.show{opacity:1}
+@media(max-width:560px){.two{flex-direction:column;gap:0}.stats{flex-wrap:wrap}.stat{min-width:45%}}
+</style>
+</head>
+<body>
+<div class="bgmesh"></div>
+<div class="wrap">
+  <header class="top">
+    <span class="brand"><span class="mark"></span>Sim</span>
+    <nav><a href="index.html">Home</a><a href="ladder.html">Ladder</a><a href="portfolio.html" class="on">Portfolio</a></nav>
+  </header>
+
+  <div class="head">
+    <div class="row">
+      <div class="who">
+        <div class="avatar">DC</div>
+        <div><h1>Deepesh C. — backend architect</h1><p>C# · .NET 8 · Azure · clean architecture · 12+ yrs</p></div>
+      </div>
+      <div class="url">sim.app/deepesh-c <button onclick="copyLink()">Copy link</button></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num" id="st-ship">0</div><div class="lab">shipped</div></div>
+      <div class="stat"><div class="num" id="st-arch">0</div><div class="lab">archetypes</div></div>
+      <div class="stat"><div class="num" id="st-live">0</div><div class="lab">live demos</div></div>
+    </div>
+  </div>
+
+  <div class="shipbar">
+    <h2>Shipped projects</h2>
+    <a class="shipbtn" href="ship.html">+ Ship a project</a>
+  </div>
+
+  <div id="cards"></div>
+</div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+function archKey(label){
+  var l=(label||'').toLowerCase();
+  if(l.indexOf('polish')>-1)return 'polish';
+  if(l.indexOf('debug')>-1)return 'debug';
+  if(l.indexOf('rescue')>-1)return 'rescue';
+  if(l.indexOf('agent')>-1||l.indexOf('ai-')>-1)return 'ai';
+  if(l.indexOf('architect')>-1)return 'architect';
+  if(l.indexOf('unfixable')>-1)return 'unfixable';
+  if(l.indexOf('capstone')>-1)return 'capstone';
+  return 'build';
+}
+var shipped=[
+  {title:'Container status webhook normaliser',out:'Unified 3 carrier formats into one clean feed; new carriers add by config.',arch:'Build-type · integration',sector:'Logistics / Shipping',stack:['C#','.NET 8','Adapter pattern','CsvHelper'],repo:'https://github.com',live:'https://example.com'},
+  {title:'Public developer API that feels world-class',out:'Versioned API with consistent errors, rate limits, and docs a stranger can integrate in 10 minutes.',arch:'Snapple-type · polish',sector:'Pure tech play',stack:['C#','.NET 8','OpenAPI','ProblemDetails'],repo:'https://github.com',live:'https://example.com'},
+  {title:'Find and fix the bug a junior shipped',out:'Diagnosed a decimal-rounding fee bug cold, fixed it minimally, added regression tests.',arch:'Debug-type · inherited code',sector:'Fintech',stack:['C#','.NET 8','xUnit'],repo:'https://github.com',live:''}
+];
+function render(){
+  var html='';
+  shipped.forEach(function(p){
+    var k=archKey(p.arch);
+    var badges=p.stack.map(function(s){return '<span class="badge">'+s+'</span>';}).join('');
+    var live=p.live?'<a class="live" href="'+p.live+'" target="_blank">Live &#8599;</a>':'';
+    html+='<div class="pcard"><div class="row"><div class="main">'+
+      '<span class="apill a-'+k+'">'+p.arch+'</span>'+
+      '<h3>'+p.title+'</h3><p class="out">'+p.out+'</p>'+
+      '<div class="badges">'+badges+'</div></div>'+
+      '<div class="acts"><a class="repo" href="'+p.repo+'" target="_blank">Repo &#8599;</a>'+live+'</div>'+
+      '</div></div>';
+  });
+  document.getElementById('cards').innerHTML=html;
+  document.getElementById('st-ship').textContent=shipped.length;
+  var archs={};shipped.forEach(function(p){archs[archKey(p.arch)]=1;});
+  document.getElementById('st-arch').textContent=Object.keys(archs).length;
+  document.getElementById('st-live').textContent=shipped.filter(function(p){return p.live;}).length;
+}
+function copyLink(){if(navigator.clipboard){navigator.clipboard.writeText('https://sim.app/deepesh-c');}showToast('Link copied');}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},1600);}
+
+function pickupNewProject(){
+  var raw=null;
+  try{ raw=sessionStorage.getItem('sim_new_project'); }catch(e){}
+  if(raw){
+    try{
+      var p=JSON.parse(raw);
+      if(p&&p.title&&p.repo){ shipped.unshift(p); }
+    }catch(e){}
+    try{ sessionStorage.removeItem('sim_new_project'); }catch(e){}
+    render();
+    showToast('Added to portfolio');
+    return;
+  }
+  render();
+}
+pickupNewProject();
+</script>
+</body>
+</html>
