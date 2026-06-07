@@ -91,6 +91,12 @@ nav a:hover,nav a.on{background:var(--card);color:var(--ink);box-shadow:var(--sh
 .cancel{background:var(--bg);border:1px solid var(--line2);color:var(--ink2);font-family:inherit;font-size:14px;font-weight:500;padding:10px 18px;border-radius:11px;cursor:pointer}
 .addbtn{background:var(--green);color:#fff;border:none;font-family:inherit;font-weight:600;font-size:14px;padding:10px 22px;border-radius:11px;cursor:pointer;transition:all .15s}
 .addbtn:disabled{opacity:.4;cursor:default}
+.empty{background:var(--card);border-radius:22px;padding:54px 30px;text-align:center;box-shadow:var(--shadow)}
+.empty-ic{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--blue-soft),var(--purple-soft));display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--purple-ink);margin:0 auto 18px}
+.empty-h{font-family:Sora,sans-serif;font-weight:600;font-size:19px;margin-bottom:8px;letter-spacing:-.3px}
+.empty-p{color:var(--ink2);font-size:14.5px;max-width:380px;margin:0 auto 22px;line-height:1.55}
+.empty-btn{background:var(--green);color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:11px 22px;border-radius:11px;display:inline-block;box-shadow:0 4px 14px rgba(43,182,115,.3);transition:all .15s}
+.empty-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(43,182,115,.4)}
 .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-weight:500;font-size:14px;padding:12px 24px;border-radius:12px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:60;box-shadow:var(--shadow-lift)}
 .toast.show{opacity:1}
 @media(max-width:560px){.two{flex-direction:column;gap:0}.stats{flex-wrap:wrap}.stat{min-width:45%}}
@@ -141,11 +147,7 @@ function archKey(label){
   if(l.indexOf('capstone')>-1)return 'capstone';
   return 'build';
 }
-var shipped=[
-  {title:'Container status webhook normaliser',out:'Unified 3 carrier formats into one clean feed; new carriers add by config.',arch:'Build-type · integration',sector:'Logistics / Shipping',stack:['C#','.NET 8','Adapter pattern','CsvHelper'],repo:'https://github.com',live:'https://example.com'},
-  {title:'Public developer API that feels world-class',out:'Versioned API with consistent errors, rate limits, and docs a stranger can integrate in 10 minutes.',arch:'Snapple-type · polish',sector:'Pure tech play',stack:['C#','.NET 8','OpenAPI','ProblemDetails'],repo:'https://github.com',live:'https://example.com'},
-  {title:'Find and fix the bug a junior shipped',out:'Diagnosed a decimal-rounding fee bug cold, fixed it minimally, added regression tests.',arch:'Debug-type · inherited code',sector:'Fintech',stack:['C#','.NET 8','xUnit'],repo:'https://github.com',live:''}
-];
+var shipped=[];
 function render(){
   var html='';
   shipped.forEach(function(p){
@@ -159,7 +161,8 @@ function render(){
       '<div class="acts"><a class="repo" href="'+p.repo+'" target="_blank">Repo &#8599;</a>'+live+'</div>'+
       '</div></div>';
   });
-  document.getElementById('cards').innerHTML=html;
+  document.getElementById('cards').innerHTML = shipped.length ? html :
+    '<div class="empty"><div class="empty-ic">&#9737;</div><p class="empty-h">No projects shipped yet</p><p class="empty-p">Finish a project, then ship it here with its repo link. Each one you add becomes a card on this page.</p><a class="empty-btn" href="ship.html">+ Ship your first project</a></div>';
   document.getElementById('st-ship').textContent=shipped.length;
   var archs={};shipped.forEach(function(p){archs[archKey(p.arch)]=1;});
   document.getElementById('st-arch').textContent=Object.keys(archs).length;
